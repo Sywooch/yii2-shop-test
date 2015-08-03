@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Category;
-use app\models\SearchCategory;
+use app\modules\admin\models\Category;
+use app\modules\admin\models\SearchCategory;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -47,13 +47,14 @@ class CategoryController extends Controller
      * @param integer $id
      * @return mixed
      */
+    /*
     public function actionView($id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
-
+    */
     /**
      * Creates a new Category model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -62,16 +63,16 @@ class CategoryController extends Controller
     public function actionCreate()
     {
         $model = new Category();
-
+        $models = Category::getListCategory(['active' => 1]);
+        if($model->isNewRecord){
+            $model->active = 1;
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $searchModel = new SearchCategory();
-            return $this->redirect(['index', [
-                'dataProvider' => $searchModel,
-            ]]);
-            
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'models' => $models,
             ]);
         }
     }
@@ -85,15 +86,18 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $models = Category::getListCategory(['active' => 1]);
+        $model->updated = Yii::$app->formatter->format($model->updated, 'date');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //return $this->redirect(['view', 'id' => $model->id]);
+            $model->updated = Yii::$app->formatter->format($model->updated, 'date');
             return $this->render('update', [
                 'model' => $model,
+                'models' => $models,
             ]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'models' => $models,
             ]);
         }
     }

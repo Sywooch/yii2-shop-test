@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\modules\admin\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -76,6 +76,14 @@ class Category extends ActiveRecord
             'active' => 'Активность',
         ];
     }
+    
+    /**
+     * List for DropDownList
+     *  @property array $where
+     */
+    public static function getListCategory($where = null) {
+        return self::find()->select(['name','id'])->where($where)->all();
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -84,4 +92,13 @@ class Category extends ActiveRecord
     {
         return $this->hasMany(Product::className(), ['category_id' => 'id']);
     }
+    public function beforeValidate() {
+        $time =\DateTime::createFromFormat('d-m-Y',$this->created);
+        if(is_object($time)){
+            $this->created = $time->format('U');
+        }     
+        //$this->updated = \DateTime::createFromFormat('d-m-Y',$this->updated)->format('U');
+        return parent::beforeValidate();
+    }
+    
 }

@@ -1,9 +1,10 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\admin\controllers;
 
 use Yii;
 use app\modules\admin\models\Product;
+use app\modules\admin\models\Category;
 use app\modules\admin\models\SearchProduct;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -70,6 +71,7 @@ class ProductController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'listCategory' => Category::getListCategory(),
             ]);
         }
     }
@@ -88,10 +90,12 @@ class ProductController extends Controller
             $model->updated = Yii::$app->formatter->format($model->updated, 'date');
             return $this->render('update', [
                 'model' => $model,
+                'listCategory' => Category::getListCategory(),
             ]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'listCategory' => Category::getListCategory(),
             ]);
         }
     }

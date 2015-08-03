@@ -1,44 +1,33 @@
 <?php
-use app\models\Category;
+
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Product */
+/* @var $model app\modules\admin\models\Category */
 /* @var $form yii\widgets\ActiveForm */
-
-//$model->updated = Yii::$app->formatter->format($model->updated, 'date');
 ?>
-
-<div class="product-form">
+<?//var_dump($models)?>
+<div class="category-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'active')->checkbox(['id' => 'check']) ?>
-    <?= $form->field($model, 'price')->textInput() ?>
-    <?echo $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'name'));?>
+    <?= $form->field($model, 'parent_category_id')->dropDownList(ArrayHelper::merge(['0' => '- Не выбрано'], ArrayHelper::map($models, 'id', 'name')));?>
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
 
-    <?//= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'image')->fileInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
     
     <?= $form->field($model, 'created')->widget(DatePicker::classname(),[
         'language' => 'ru',
         'dateFormat' => 'dd-MM-yyyy',
     ]) ?>
     <?= $form->field($model,'updated')->textInput(['maxlength' => true,'disabled' =>'disabled']) ?>
-    <?= $form->field($model, 'screen_size')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'os')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'standart')->textInput(['maxlength' => true]) ?>
-
-    
     <?= $form->field($model, 'content')->textArea(['rows'=>'15']) ?>
 
     <div class="form-group">

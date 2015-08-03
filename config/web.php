@@ -50,6 +50,11 @@ $config = [
         'db' => require(__DIR__ . '/db.php'),
     ],
     'params' => $params,
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
@@ -59,6 +64,22 @@ if (YII_ENV_DEV) {
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = 'yii\gii\Module';
+    $config['components']['log']['targets'][] = [
+        'class' => 'yii\log\FileTarget',
+        'levels' => ['info'],
+        'categories' => ['apiRequest'],
+        'logFile' => '@app/runtime/logs/API/requests.log',
+        'maxFileSize' => 1024 * 2,
+        'maxLogFiles' => 20,
+    ];
+    $config['components']['log']['targets'][] = [
+        'class' => 'yii\log\FileTarget',
+        'levels' => ['info'],
+        'categories' => ['apiResponse'],
+        'logFile' => '@app/runtime/logs/API/response.log',
+        'maxFileSize' => 1024 * 2,
+        'maxLogFiles' => 20,
+    ];
 }
 
 return $config;

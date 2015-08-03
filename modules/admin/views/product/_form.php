@@ -1,12 +1,12 @@
 <?php
-use app\models\Category;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Product */
+/* @var $model app\modules\admin\models\Product */
+/* @var $listCategory app\modules\admin\models\Category; */
 /* @var $form yii\widgets\ActiveForm */
 
 //$model->updated = Yii::$app->formatter->format($model->updated, 'date');
@@ -19,7 +19,7 @@ use yii\jui\DatePicker;
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'active')->checkbox(['id' => 'check']) ?>
     <?= $form->field($model, 'price')->textInput() ?>
-    <?echo $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'name'));?>
+    <?echo $form->field($model, 'category_id')->dropDownList(ArrayHelper::map($listCategory, 'id', 'name'));?>
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>

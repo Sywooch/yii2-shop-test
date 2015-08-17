@@ -4,6 +4,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use himiklab\colorbox\Colorbox;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -18,6 +19,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <base href="http://yii2-shop.by:8080/">
     <?php $this->head() ?>
 </head>
 <body>
@@ -64,7 +66,15 @@ AppAsset::register($this);
             <p class="pull-right"><?= Yii::powered() ?></p>
         </div>
     </footer>
-
+<?= Colorbox::widget([
+    'targets' => [
+        '.colorbox' => [
+            //'maxWidth' => 600,
+            //'maxHeight' => 800,
+        ],
+    ],
+    'coreStyle' => 1
+]) ?>
 <?php $this->endBody() ?>
 </body>
 </html>

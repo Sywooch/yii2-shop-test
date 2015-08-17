@@ -30,3 +30,6 @@ phpunit.phar
 /yii
 /yii.bat
 /runtime/
+/web/images/
+/web/resize_images/
+/web/cache/

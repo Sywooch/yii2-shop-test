@@ -2,5 +2,7 @@
 
 return [
     'adminEmail' => 'admin@example.com',
-    'thumbnail_size' => ['w' => 128,'h' => 128],
+    'thumbnail_size' => ['w' => 150,'h' => 260],
+    'name2' => 'Админка магазина',
+    'PageSize' => 2,
 ];

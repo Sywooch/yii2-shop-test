@@ -3,89 +3,62 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
-use yii\data\ActiveDataProvider;
+use yii\bootstrap\Nav;
+use yii\widgets\Menu;
+//use yii\imagine\Image;
+use Gregwar\Image\Image;
+use yii\widgets\LinkPager;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\SearchCategory */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $menu_items_category array */
+/* @var $items_product app\modules\admin\models\Product; */
 
-$this->title = 'Категории каталога товаров';
+
+$this->title = 'Телефоны';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">
+    <div class="row">
+        <div class="col-md-3">
+            <?php
+            echo Nav::widget([
+                'options' => ['class' => 'nav-pills nav-stacked'],
+                'items' => $menu_items_category,
+            ]);
+            ?>
+        </div>
+        <div class="col-md-9">
+            <h1><?= Html::encode($this->title) ?></h1>
+            <div class="row">
+                <? foreach ($items_product as $product): ?>
+                    <div class="col-sm-4">
+                        <div class="ec-box">
+                            <div class="ec-box-header">
+                                <a href="<?= Url::to(['product/view', 'alias' => $product->alias]) ?>"><?= $product->name ?></a>
+                            </div>
+                            <a href="<?= Url::to(['product/view', 'alias' => $product->alias]) ?>">
+                                <img src="<?= Image::open($product->image)->resize(Yii::$app->params['thumbnail_size']['w'], Yii::$app->params['thumbnail_size']['h'])->jpeg() ?>" alt="<?= $product->name ?>">
+                            </a><br />
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            //['class' => 'yii\grid\SerialColumn'],
-            [
-                'class' => yii\grid\CheckboxColumn::classname(),
-                'headerOptions' => [
-                     'class'=>'col-md-1'
-                ],
-            ],
-            [
-                'attribute' => 'id',
-                'headerOptions' => [
-                     'class'=>'col-sm-1'
-                ],
-            ],
-            [
-                'attribute' => 'name',
-                'format' => 'raw',
-                'value' => function($category) {
-                    return Html::tag('a', $category->name, ['href' => Url::to(['update','id' => $category->id])]);
-                }
-            ],
-            'parent_category_id',
-            [
-                'attribute' => 'parent_category_id',
-                'format' => 'raw',
-                'value' => function($category) {
-                    //return Html::tag('a', $category->name, ['href' => Url::to(['update','id' => $category->id])]);
-                
-                }
-            ],
-            [
-                'attribute'=>'active',
-                'format' => 'raw',
-                'value' => function($category) {
-                    if($category->active){
-                        $mes = 'Да';
-                        $class = 'success';
-                    }else{
-                        $mes = 'Нет';
-                        $class = 'warning';
-                    }
-                    return Html::tag('span', $mes, ['class' => 'label label-'.$class]);
-                },
-                'headerOptions' => [
-                     'class'=>'col-sm-1'
-                ],
-            ],
-            //'description',
-            //'keywords',
-            // 'content',
-            // 'image',
-            // 'created',
-            // 'updated',
-
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{update}{delete}',
-                'headerOptions' => [
-                     'class'=>'col-sm-1'
-                ],
-            ],
-        ],
-    ]); ?>
-
+                            <div class="ec-box-footer">
+                                <span class="label label-primary">
+                                    <? echo $product->price ? $product->price . ' руб.' : 'Цена по запросу' ?>
+                                </span>
+                                <a href="<?= Url::to(['product/view', 'alias' => $product->alias]) ?>">
+                                    <span class="btn-success btn-sm pull-right">Подробнее</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <? endforeach ?>
+            </div>
+            <div class="row">
+                <?
+                echo LinkPager::widget([
+                    'pagination' => $pages,
+                ]);
+                ?>
+            </div>
+        </div>
+    </div>
 </div>

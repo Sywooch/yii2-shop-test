@@ -42,7 +42,11 @@ class SearchProduct extends Product
      */
     public function search($params)
     {
-        $query = Product::find();
+        // ленивая загрузка. каждая категория выбирается отдельным запросом
+        //$query = Product::find();
+        
+        //жадная загрузка. все категории выбираются одним запросом
+        $query = Product::find()->with('category');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -26,11 +26,12 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                //'brandLabel' => 'My Company',
-                'brandLabel' => Yii::$app->name,
+                //'brandLabel' => Yii::$app->name,
+                'brandLabel' => Yii::$app->params['name2'],
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
+                    'class' => 'navbar-default navbar-fixed-top',
+                    'id' => 'top_menu'
                 ],
             ]);
             echo Nav::widget([

@@ -15,6 +15,7 @@ use yii\jui\DatePicker;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'alias')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'active')->checkbox(['id' => 'check']) ?>
     <?= $form->field($model, 'parent_category_id')->dropDownList(ArrayHelper::merge(['0' => '- Не выбрано'], ArrayHelper::map($models, 'id', 'name')));?>
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>

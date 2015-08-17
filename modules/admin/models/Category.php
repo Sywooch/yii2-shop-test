@@ -4,6 +4,7 @@ namespace app\modules\admin\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveRecord;
 
 /**
@@ -16,6 +17,7 @@ use yii\db\ActiveRecord;
  * @property string $keywords
  * @property string $content
  * @property string $image
+ * @property string $alias
  * @property string $created
  * @property string $updated
  * @property integer $active
@@ -41,7 +43,8 @@ class Category extends ActiveRecord
             [['name', 'parent_category_id', 'active'], 'required'],
             [['parent_category_id', 'active'], 'integer'],
             [['created', 'updated'], 'safe'],
-            [['name', 'description', 'keywords', 'image'], 'string', 'max' => 255]
+            [['name', 'description', 'keywords', 'image','alias'], 'string', 'max' => 255],
+            [['content'], 'string']
         ];
     }
     
@@ -55,6 +58,11 @@ class Category extends ActiveRecord
                     ActiveRecord::EVENT_BEFORE_UPDATE => 'updated',
                 ],
                 'value' => function() { return date('U');},
+            ],
+            'alias' =>[
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'name',
+                'slugAttribute' => 'alias',  
             ],
         ];
     }
@@ -74,6 +82,7 @@ class Category extends ActiveRecord
             'created' => 'Создан',
             'updated' => 'Обновлен',
             'active' => 'Активность',
+            'alias' => 'Псевдоним',
         ];
     }
     
@@ -84,7 +93,25 @@ class Category extends ActiveRecord
     public static function getListCategory($where = null) {
         return self::find()->select(['name','id'])->where($where)->all();
     }
-
+    
+    /**
+     * @return array
+     * массив категорий для меню
+     * 
+     */
+    public static function getItemsCategoryMenu($parent_category_id,$category_id = NULL) {
+        $query = self::find()->where(['parent_category_id'=>$parent_category_id,'active'=>1])->select(['alias','id','name'])->all();
+        $items = [];
+        $i = 0;
+        foreach ($query as $value) {
+            $items[$i] =  ['label' => $value->name, 'url' => ['category/view','alias' => $value->alias]];
+            if(isset($category_id) && $category_id==$value->id){
+                $items[$i]['active'] = true;
+            }
+            $i++;
+        }
+        return $items;
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

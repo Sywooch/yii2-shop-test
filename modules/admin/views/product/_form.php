@@ -14,9 +14,12 @@ use yii\jui\DatePicker;
 
 <div class="product-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' =>['enctype' => 'multipart/form-data'],
+    ]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'alias')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'active')->checkbox(['id' => 'check']) ?>
     <?= $form->field($model, 'price')->textInput() ?>
     <?echo $form->field($model, 'category_id')->dropDownList(ArrayHelper::map($listCategory, 'id', 'name'));?>
@@ -24,8 +27,8 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
 
-    <?//= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'image')->fileInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?//= $form->field($model, 'image')->fileInput(['maxlength' => true]) ?>
     
     <?= $form->field($model, 'created')->widget(DatePicker::classname(),[
         'language' => 'ru',

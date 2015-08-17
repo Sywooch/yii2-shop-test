@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models;
 use yii\behaviors\TimestampBehavior;
+use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveRecord;
 
 use Yii;
@@ -22,6 +23,7 @@ use Yii;
  * @property string $screen_size
  * @property string $os
  * @property string $standart
+ * @property string $alias
  * @property integer $category_id
  *
  * @property Category $category
@@ -45,7 +47,8 @@ class Product extends ActiveRecord
             [['price'], 'number'],
             [['created', 'updated'], 'safe'],
             [['active', 'category_id'], 'integer'],
-            [['name', 'description', 'keywords', 'image', 'screen_size', 'os', 'standart'], 'string', 'max' => 255]
+            [['name', 'description', 'keywords', 'image', 'screen_size', 'os', 'standart','alias'], 'string', 'max' => 255],
+            [['content'], 'string']
         ];
     }
     
@@ -59,6 +62,11 @@ class Product extends ActiveRecord
                     ActiveRecord::EVENT_BEFORE_UPDATE => 'updated',
                 ],
                 'value' => function() { return date('U');},
+            ],
+            'alias' =>[
+              'class' => SluggableBehavior::className(),
+              'attribute' => 'name',
+              'slugAttribute' => 'alias',  
             ],
         ];
     }
@@ -83,6 +91,7 @@ class Product extends ActiveRecord
             'os' => 'Операционная система',
             'standart' => 'Стандарт связи',
             'category_id' => 'Категория',
+            'alias' => 'Псевдоним',
         ];
     }
 
@@ -93,6 +102,22 @@ class Product extends ActiveRecord
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
+    
+    /**
+     * 
+     * @return array
+     * массив товаров для меню
+     * 
+     */
+    public static function getItemsProductMenu($category_id) {
+        $query = self::find()->where(['category_id'=>$category_id,'active'=>1])->select(['alias','name'])->all();
+        $items = [];
+        foreach ($query as $value) {
+            $items[] =  ['label' => $value->name, 'url' => ['product/view','alias' => $value->alias]];
+        }
+        return $items;
+    }
+
     public function beforeValidate() {
         $time =\DateTime::createFromFormat('d-m-Y',$this->created);
         if(is_object($time)){

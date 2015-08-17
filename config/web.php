@@ -5,18 +5,26 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'language' => 'ru-RU',
     'name' => 'Yii2 магазин',
+    //'name_admin_panel' => 'Админка магазина',
+    //'name2' => 'Админка магазина',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
-        /*'urlManager' => [
+        'urlManager' => [
             'class'=>'yii\web\UrlManager',
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-               //Здесь будет описание правил ЧПУ
+                '' => 'site/index',
+                'admin/<controller:\w+>/<action:\w+>' => 'admin/<controller>/<action>',
+                //'<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<alias:\w+>' => '<controller>/view',
+                '<controller:category|product>' => '<controller>/index',
+                '<action:\w+>' => 'site/<action>',
             ],
-        ],*/
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'sdkf7RrZdpFP41VD0Zzoo7FtNvUM3iAT',
@@ -37,6 +45,14 @@ $config = [
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
+        ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'booleanFormat'=>['Нет','Да'],
+            'dateFormat' => 'php:d.m.Y',         //Тут можно формат вывода дат по умолчанию настроить
+            'datetimeFormat' => 'php:d.m.Y H:i',
+            'timeFormat' => 'short',         
+            'nullDisplay'=>'<span style="color:red">Не задано</span>',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

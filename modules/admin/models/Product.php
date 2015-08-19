@@ -104,9 +104,10 @@ class Product extends ActiveRecord
     }
     
     /**
-     * 
-     * @return array
      * массив товаров для меню
+     * @return array
+     * 
+     * @param integer $category_id
      * 
      */
     public static function getItemsProductMenu($category_id) {
@@ -127,10 +128,4 @@ class Product extends ActiveRecord
         //Yii::info('1111', 'apiResponse');
         return parent::beforeValidate();
     }
-    /*
-    public function beforeUpdate() {
-        echo '!!!!!!!!!!';
-        Yii::info('1111', 'apiRequest');
-        return parent::beforeUpdate();
-    }*/
 }

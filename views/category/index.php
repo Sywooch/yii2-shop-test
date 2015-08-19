@@ -8,6 +8,7 @@ use yii\widgets\Menu;
 //use yii\imagine\Image;
 use Gregwar\Image\Image;
 use yii\widgets\LinkPager;
+use \yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $menu_items_category array */
@@ -29,7 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="col-md-9">
             <h1><?= Html::encode($this->title) ?></h1>
+            <?php Pjax::begin([
+                'timeout' => 1500,
+                'scrollTo' => 200,//скролл на колличество пикселей сверху
+                //'enableReplaceState' => true,
+                ]); ?>
             <div class="row">
+                <div class="col-md-12" style='padding-bottom:20px;'>
+                    <div class="btn-group">
+                        <?echo $sort->link('price');?>
+                    </div>
+                    
+                </div>
                 <? foreach ($items_product as $product): ?>
                     <div class="col-sm-4">
                         <div class="ec-box">
@@ -59,6 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]);
                 ?>
             </div>
+            <?php Pjax::end(); ?>
         </div>
     </div>
 </div>

@@ -29,7 +29,7 @@ class ProductController extends Controller
 
     /**
      * Displays a single Product model.
-     * @param integer $id
+     * @param string $alias
      * @return mixed
      */
     public function actionView($alias)
@@ -47,7 +47,7 @@ class ProductController extends Controller
     /**
      * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
+     * @param string $alias
      * @return Product the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

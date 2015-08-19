@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
+use yii\data\Sort;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -32,40 +33,57 @@ class CategoryController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        /*$searchModel = new SearchCategory();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-        ]);*/
         $menu_items_category = Category::getItemsCategoryMenu(0);
+        $sort = new Sort([
+            'attributes' => [
+                'price' => [
+                    'asc' => ['price' => SORT_ASC],
+                    'desc' => ['price' => SORT_DESC],
+                    'default' => SORT_DESC,
+                    'label' => 'Сортировать по цене',
+                ],
+            ],
+        ]);
         $query = Product::find()->where(['active' => 1]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(),'defaultPageSize' => Yii::$app->params['PageSize']]);
         $items_product = $query->offset($pages->offset)
                 ->limit($pages->limit)
+                ->orderBy($sort->orders)
                 ->all();
         return $this->render('index', [
                     'menu_items_category' => $menu_items_category,
                     'items_product' => $items_product,
                     'pages' => $pages,
+                    'sort' => $sort,
         ]);
     }
 
     /**
      * Displays a single Category model.
-     * @param integer $id
+     * @param string $alias
      * @return mixed
      */
     public function actionView($alias) {
         $model = $this->findModel($alias);
         $menu_items_product = Product::getItemsProductMenu($model->id);
         $menu_items_category = Category::getItemsCategoryMenu($model->parent_category_id);
+        $sort = new Sort([
+            'attributes' => [
+                'price' => [
+                    'asc' => ['price' => SORT_ASC],
+                    'desc' => ['price' => SORT_DESC],
+                    'default' => SORT_DESC,
+                    //'label' => 'Сортировать по цене',
+                ],
+            ],
+        ]);
         $query = Product::find()->where(['active' => 1, 'category_id' => $model->id]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(),'defaultPageSize' => Yii::$app->params['PageSize']]);
         $items_product = $query->offset($pages->offset)
                 ->limit($pages->limit)
+                ->orderBy($sort->orders)
                 ->all();
         return $this->render('view', [
                     'model' => $model,
@@ -73,6 +91,7 @@ class CategoryController extends Controller {
                     'menu_items_category' => $menu_items_category,
                     'items_product' => $items_product,
                     'pages' => $pages,
+                    'sort' => $sort,
         ]);
     }
 

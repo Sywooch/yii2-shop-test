@@ -8,6 +8,7 @@ use yii\widgets\Menu;
 use Gregwar\Image\Image;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+use \yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\admin\models\Category */
@@ -21,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->registerMetaTag(['name' => 'keywords', 'content' => $model->keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $model->description]);
 ?>
+
 <div class="category-view">
     <div class="row">
         <div class="col-md-3">
@@ -56,8 +58,17 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->descriptio
                     </div>
                 </div>
             </div>
-
+            <?php Pjax::begin([
+                'timeout' => 1500,
+                'scrollTo' => 200,//скролл на кооличество пикселей сверху
+                ]); ?>
             <div class="row">
+                <div class="col-md-12" style='padding-top:20px;padding-bottom:20px;'>
+                    <div class="btn-group">
+                        <?echo $sort->link('price',['label' => 'Сортировать по <span class="sort_'.$sort->createSortParam('price').'" style="color:red">цене</span>']);?>
+                    </div>
+                    
+                </div>
                 <br /><br />
                 <? foreach ($items_product as $product): ?>
                     <div class="col-sm-4">
@@ -85,9 +96,13 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->descriptio
                 <?
                 echo LinkPager::widget([
                     'pagination' => $pages,
+                    'linkOptions' => [
+                        //'data-pjax'=>0,// отключаем pjax
+                    ],
                 ]);
                 ?>
             </div>
+            <?php Pjax::end(); ?>
         </div>
     </div>
 </div>

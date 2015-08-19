@@ -95,8 +95,11 @@ class Category extends ActiveRecord
     }
     
     /**
-     * @return array
      * массив категорий для меню
+     * @return array
+     * 
+     * @param integer $category_id
+     * @param integer $parent_category_id
      * 
      */
     public static function getItemsCategoryMenu($parent_category_id,$category_id = NULL) {

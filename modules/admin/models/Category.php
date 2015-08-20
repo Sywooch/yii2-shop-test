@@ -24,53 +24,57 @@ use yii\db\ActiveRecord;
  *
  * @property Product[] $products
  */
-class Category extends ActiveRecord
-{
+class Category extends ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'category';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['name', 'parent_category_id', 'active'], 'required'],
             [['parent_category_id', 'active'], 'integer'],
             [['created', 'updated'], 'safe'],
-            [['name', 'description', 'keywords', 'image','alias'], 'string', 'max' => 255],
+            [['name', 'description', 'keywords', 'image', 'alias'], 'string', 'max' => 255],
+            [['alias'], 'unique'],
             [['content'], 'string']
         ];
     }
-    
-    public function behaviors()
-    {
+
+    public function behaviors() {
         return [
             'timestamp' => [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created','updated'],
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created', 'updated'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => 'updated',
                 ],
-                'value' => function() { return date('U');},
+                'value' => function() {
+                        return date('U');
+                    },
             ],
-            'alias' =>[
+            'alias' => [
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'name',
-                'slugAttribute' => 'alias',  
+                'slugAttribute' => 'alias',
             ],
+            'image' => [
+                //'class' => 'rico\yii2images\behaviors\ImageBehave',
+                'class' => 'app\behaviors\ImageBehavior',
+            ]
         ];
     }
+
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'name' => 'Имя',
@@ -85,15 +89,15 @@ class Category extends ActiveRecord
             'alias' => 'Псевдоним',
         ];
     }
-    
+
     /**
      * List for DropDownList
      *  @property array $where
      */
     public static function getListCategory($where = null) {
-        return self::find()->select(['name','id'])->where($where)->all();
+        return self::find()->select(['name', 'id'])->where($where)->all();
     }
-    
+
     /**
      * массив категорий для меню
      * @return array
@@ -102,33 +106,34 @@ class Category extends ActiveRecord
      * @param integer $parent_category_id
      * 
      */
-    public static function getItemsCategoryMenu($parent_category_id,$category_id = NULL) {
-        $query = self::find()->where(['parent_category_id'=>$parent_category_id,'active'=>1])->select(['alias','id','name'])->all();
+    public static function getItemsCategoryMenu($parent_category_id, $category_id = NULL) {
+        $query = self::find()->where(['parent_category_id' => $parent_category_id, 'active' => 1])->select(['alias', 'id', 'name'])->all();
         $items = [];
         $i = 0;
         foreach ($query as $value) {
-            $items[$i] =  ['label' => $value->name, 'url' => ['category/view','alias' => $value->alias]];
-            if(isset($category_id) && $category_id==$value->id){
+            $items[$i] = ['label' => $value->name, 'url' => ['category/view', 'alias' => $value->alias]];
+            if (isset($category_id) && $category_id == $value->id) {
                 $items[$i]['active'] = true;
             }
             $i++;
         }
         return $items;
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProducts()
-    {
+    public function getProducts() {
         return $this->hasMany(Product::className(), ['category_id' => 'id']);
     }
+
     public function beforeValidate() {
-        $time =\DateTime::createFromFormat('d-m-Y',$this->created);
-        if(is_object($time)){
+        $time = \DateTime::createFromFormat('d-m-Y', $this->created);
+        if (is_object($time)) {
             $this->created = $time->format('U');
-        }     
+        }
         //$this->updated = \DateTime::createFromFormat('d-m-Y',$this->updated)->format('U');
         return parent::beforeValidate();
     }
-    
+
 }

@@ -12,7 +12,9 @@ use yii\jui\DatePicker;
 <?//var_dump($models)?>
 <div class="category-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' =>['enctype' => 'multipart/form-data'],
+    ]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'alias')->textInput(['maxlength' => true]) ?>
@@ -22,7 +24,22 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?//= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'image')->fileInput() ?>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <?$images = $model->getImages()?>
+            <div class="row">
+                <?  foreach ($images as $image):?>
+                <div class="col-md-3">
+                    
+                    <img src="<?=$image->getPath('200x200')?>">
+                </div>
+                <?endforeach?>
+            </div>
+            
+        </div>
+    </div>
     
     <?= $form->field($model, 'created')->widget(DatePicker::classname(),[
         'language' => 'ru',

@@ -48,6 +48,7 @@ class ProductController extends Controller
             $model->active = 1;
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->fileAttach($model);
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -68,6 +69,7 @@ class ProductController extends Controller
         $model = $this->findModel($id);
         $model->updated = Yii::$app->formatter->format($model->updated, 'date');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->fileAttach($model);
             $model->updated = Yii::$app->formatter->format($model->updated, 'date');
             return $this->render('update', [
                 'model' => $model,
@@ -108,5 +110,20 @@ class ProductController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    /**
+     * attach image
+     * @param type $model
+     * @return boolean
+     */
+    protected function fileAttach($model) {
+        $model->image = \yii\web\UploadedFile::getInstance($model, 'image');
+        if($model->image){
+            $path = Yii::getAlias('@webroot/upload/files/').$model->image->baseName.'.'.$model->image->extension;
+            $model->image->saveAs($path);
+            $model->attachImage($path);
+            return true;
+        }
+        return false;
     }
 }

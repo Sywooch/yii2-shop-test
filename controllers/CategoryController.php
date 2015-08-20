@@ -51,11 +51,23 @@ class CategoryController extends Controller {
                 ->limit($pages->limit)
                 ->orderBy($sort->orders)
                 ->all();
+        // тут вытягиваем все главные картинки одним запросом
+        $arItems =[];
+        foreach ($items_product as $value) {
+            $arItems[] = $value->id;
+        }
+        if(is_object($items_product['0'])){
+            $images = $items_product['0']->getImagesMain($arItems,'Product');
+        }else{
+            $images = [];
+        }
+        unset($arItems);
         return $this->render('index', [
                     'menu_items_category' => $menu_items_category,
                     'items_product' => $items_product,
                     'pages' => $pages,
                     'sort' => $sort,
+                    'images' => $images,
         ]);
     }
 
@@ -65,6 +77,7 @@ class CategoryController extends Controller {
      * @return mixed
      */
     public function actionView($alias) {
+        
         $model = $this->findModel($alias);
         $menu_items_product = Product::getItemsProductMenu($model->id);
         $menu_items_category = Category::getItemsCategoryMenu($model->parent_category_id);
@@ -85,6 +98,12 @@ class CategoryController extends Controller {
                 ->limit($pages->limit)
                 ->orderBy($sort->orders)
                 ->all();
+        // тут вытягиваем все главные картинки одним запросом
+        $arItems =[];
+        foreach ($items_product as $value) {
+            $arItems[] = $value->id;
+        }
+        $images = $model->getImagesMain($arItems,'Product');
         return $this->render('view', [
                     'model' => $model,
                     'menu_items_product' => $menu_items_product,
@@ -92,6 +111,7 @@ class CategoryController extends Controller {
                     'items_product' => $items_product,
                     'pages' => $pages,
                     'sort' => $sort,
+                    'images' => $images,
         ]);
     }
 

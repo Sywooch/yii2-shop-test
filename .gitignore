@@ -34,3 +34,4 @@ phpunit.phar
 /web/resize_images/
 /web/cache/
 /web/assets/
+/web/upload/

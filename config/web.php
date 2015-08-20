@@ -12,7 +12,7 @@ $config = [
     'bootstrap' => ['log'],
     'components' => [
         'urlManager' => [
-            'class'=>'yii\web\UrlManager',
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'enableStrictParsing' => true,
             'showScriptName' => false,
@@ -48,11 +48,11 @@ $config = [
         ],
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
-            'booleanFormat'=>['Нет','Да'],
-            'dateFormat' => 'php:d.m.Y',         //Тут можно формат вывода дат по умолчанию настроить
+            'booleanFormat' => ['Нет', 'Да'],
+            'dateFormat' => 'php:d.m.Y', //Тут можно формат вывода дат по умолчанию настроить
             'datetimeFormat' => 'php:d.m.Y H:i',
-            'timeFormat' => 'short',         
-            'nullDisplay'=>'<span style="color:red">Не задано</span>',
+            'timeFormat' => 'short',
+            'nullDisplay' => '<span style="color:red">Не задано</span>',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -69,6 +69,16 @@ $config = [
     'modules' => [
         'admin' => [
             'class' => 'app\modules\admin\Module',
+        ],
+        'yii2images' => [
+            'class' => 'rico\yii2images\Module',
+            //be sure, that permissions ok 
+            //if you cant avoid permission errors you have to create "images" folder in web root manually and set 777 permissions
+            'imagesStorePath' => 'upload/store', //path to origin images
+            'imagesCachePath' => 'upload/cache', //path to resized copies
+            'graphicsLibrary' => 'GD', //but really its better to use 'Imagick' ,GD
+            'placeHolderPath' => '@webroot/upload/no-image.png', // if you want to get placeholder when image not exists, string will be processed by Yii::getAlias
+            'className' => 'app\models\Image',
         ],
     ],
 ];

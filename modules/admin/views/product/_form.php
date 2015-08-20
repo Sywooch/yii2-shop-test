@@ -27,8 +27,22 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
-    <?//= $form->field($model, 'image')->fileInput(['maxlength' => true]) ?>
+    <?//= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'image')->fileInput() ?>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <?$images = $model->getImages()?>
+            <div class="row">
+                <?  foreach ($images as $image):?>
+                <div class="col-md-3">
+                    
+                    <img src="<?=$image->getPath('200x200')?>">
+                </div>
+                <?endforeach?>
+            </div>
+            
+        </div>
+    </div>
     
     <?= $form->field($model, 'created')->widget(DatePicker::classname(),[
         'language' => 'ru',

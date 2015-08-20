@@ -1,10 +1,10 @@
 <?php
 
 namespace app\modules\admin\models;
+
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveRecord;
-
 use Yii;
 
 /**
@@ -28,54 +28,58 @@ use Yii;
  *
  * @property Category $category
  */
-class Product extends ActiveRecord
-{
+class Product extends ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'product';
     }
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['name', 'active', 'category_id'], 'required'],
             [['price'], 'number'],
             [['created', 'updated'], 'safe'],
             [['active', 'category_id'], 'integer'],
-            [['name', 'description', 'keywords', 'image', 'screen_size', 'os', 'standart','alias'], 'string', 'max' => 255],
-            [['content'], 'string']
+            [['name', 'description', 'keywords', 'image', 'screen_size', 'os', 'standart', 'alias'], 'string', 'max' => 255],
+            [['content'], 'string'],
+            [['alias'], 'unique'],
         ];
     }
-    
-    public function behaviors()
-    {
+
+    public function behaviors() {
         return [
             'timestamp' => [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created','updated'],
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created', 'updated'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => 'updated',
                 ],
-                'value' => function() { return date('U');},
+                'value' => function() {
+                    return date('U');
+                },
             ],
-            'alias' =>[
-              'class' => SluggableBehavior::className(),
-              'attribute' => 'name',
-              'slugAttribute' => 'alias',  
+            'alias' => [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'name',
+                'slugAttribute' => 'alias',
             ],
+            'image' => [
+                //'class' => 'rico\yii2images\behaviors\ImageBehave',
+                'class' => 'app\behaviors\ImageBehavior',
+            ]
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'name' => 'Имя',
@@ -98,11 +102,10 @@ class Product extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategory()
-    {
+    public function getCategory() {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
-    
+
     /**
      * массив товаров для меню
      * @return array
@@ -111,21 +114,31 @@ class Product extends ActiveRecord
      * 
      */
     public static function getItemsProductMenu($category_id) {
-        $query = self::find()->where(['category_id'=>$category_id,'active'=>1])->select(['alias','name'])->all();
+        $query = self::find()->where(['category_id' => $category_id, 'active' => 1])->select(['alias', 'name'])->all();
         $items = [];
         foreach ($query as $value) {
-            $items[] =  ['label' => $value->name, 'url' => ['product/view','alias' => $value->alias]];
+            $items[] = ['label' => $value->name, 'url' => ['product/view', 'alias' => $value->alias]];
         }
         return $items;
     }
+    
+    /**
+     * 
+     * @return array
+     * @param array $param
+     
+    public static function getImages($param) {
+        
+    }*/
 
     public function beforeValidate() {
-        $time =\DateTime::createFromFormat('d-m-Y',$this->created);
-        if(is_object($time)){
+        $time = \DateTime::createFromFormat('d-m-Y', $this->created);
+        if (is_object($time)) {
             $this->created = $time->format('U');
         }
         //$this->updated = \DateTime::createFromFormat('d-m-Y',$this->updated)->format('U');
         //Yii::info('1111', 'apiResponse');
         return parent::beforeValidate();
     }
+
 }

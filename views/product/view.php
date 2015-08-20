@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 use yii\bootstrap\Nav;
 use yii\widgets\Menu;
 //use yii\imagine\Image;
-use Gregwar\Image\Image;
+//use Gregwar\Image\Image;
 //use himiklab\colorbox\Colorbox; //подключил в layout
 
 /* @var $this yii\web\View */
@@ -29,6 +29,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->descriptio
         'standart',
     ];
     ?>
+    <?$images = $model->getImages()?>
     <div class="row">
         <div class="col-md-3">
             <?php
@@ -49,8 +50,10 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->descriptio
             <h1><?= Html::encode($this->title) ?></h1>
             <div class="row">
                 <div class="col-md-4">
-                    <a class="colorbox" href="<?= Image::open($model->image)->resize(700, 700)->jpeg(100) ?>">
-                        <img src="<?= Image::open($model->image)->resize(250, 300)->jpeg() ?>" >
+                    <a class="colorbox" href="<?=$images['0']->getPath()?>" rel="gallery">
+                        <?//= Image::open($model->image)->resize(250, 300)->jpeg() ?>
+                        <img src="<?=$images['0']->getPath('250x300')?>">
+                        <?unset($images['0'])?>
                     </a>
                 </div>
                 <div class="col-md-8">
@@ -72,6 +75,16 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->descriptio
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <h3 class="right-line">Все фото:</h3>
+                <?foreach ($images as $image):?>
+                    <div class="col-md-2">
+                        <a class="colorbox" href="<?=$image->getPath()?>" rel="gallery">
+                            <img src="<?=$image->getPath('150x150')?>">
+                        </a>
+                    </div>
+                <?endforeach?>
             </div>
             <div class="row">
                 <div class="col-md-12">

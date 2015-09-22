@@ -98,6 +98,12 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->descriptio
                     <p><?= $model->content ?></p>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="right-line">Комментарии</h3>
+                  <?= \net\frenzel\comment\views\widgets\Comments::widget(['model'=>$model]); ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>

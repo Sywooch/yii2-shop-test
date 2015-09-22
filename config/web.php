@@ -1,17 +1,14 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
-
 $config = [
     'language' => 'ru-RU',
     'name' => 'Yii2 магазин',
-    //'name_admin_panel' => 'Админка магазина',
-    //'name2' => 'Админка магазина',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
-        'urlManager' => [
+        /*'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'enableStrictParsing' => true,
@@ -24,6 +21,18 @@ $config = [
                 '<controller:category|product>' => '<controller>/index',
                 '<action:\w+>' => 'site/<action>',
             ],
+        ],*/
+        'i18n' => [
+            'translations' => [
+                'comment*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/vendor/frenzelgmbh/cm-comments/messages',
+                    'forceTranslation' => true,
+                    'fileMap' => [
+                        'comment' => 'comments.php',
+                    ],
+                ],
+            ],
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -33,8 +42,9 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            //'identityClass' => 'app\models\User',
+            //'enableAutoLogin' => true,
+            'identityClass' => 'dektrium\user\models\User',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -79,6 +89,13 @@ $config = [
             'graphicsLibrary' => 'GD', //but really its better to use 'Imagick' ,GD
             'placeHolderPath' => '@webroot/upload/no-image.png', // if you want to get placeholder when image not exists, string will be processed by Yii::getAlias
             'className' => 'app\models\Image',
+        ],
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'admins' => ['admin'],
+        ],
+        'comment' => [
+            'class' => 'net\frenzel\comment\Module'
         ],
     ],
 ];

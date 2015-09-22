@@ -41,7 +41,13 @@ AppAsset::register($this);
                     //['label' => 'Home', 'url' => ['/site/index']],
                     ['label' => 'Категории каталога', 'url' => ['category/index']],
                     ['label' => 'Товары', 'url' => ['product/index']],
-                    ['label' => 'Logout (' . Yii::$app->user->identity->username . ')','url' => ['/site/logout'],'linkOptions' => ['data-method' => 'post']],
+                    //['label' => 'Logout (' . Yii::$app->user->identity->username . ')','url' => ['/site/logout'],'linkOptions' => ['data-method' => 'post']],
+                    Yii::$app->user->isGuest ?
+                        ['label' => 'Sign in', 'url' => ['/user/security/login']] :
+                        ['label' => 'Sign out (' . Yii::$app->user->identity->username . ')',
+                            'url' => ['/user/security/logout'],
+                            'linkOptions' => ['data-method' => 'post']],
+                    ['label' => 'Register', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest]
                 ],
             ]);
             NavBar::end();

@@ -104,6 +104,43 @@
             ]
         },
         {
+            "name": "bower-asset/fontawesome",
+            "version": "v4.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "reference": "e554555d73a44e0a7d11b0361ad7a5325a5f551c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/e554555d73a44e0a7d11b0361ad7a5325a5f551c",
+                "reference": "e554555d73a44e0a7d11b0361ad7a5325a5f551c",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "less/font-awesome.less",
+                    "scss/font-awesome.scss"
+                ],
+                "bower-asset-ignore": [
+                    "*/.*",
+                    "*.json",
+                    "src",
+                    "*.yml",
+                    "Gemfile",
+                    "Gemfile.lock",
+                    "*.md"
+                ]
+            },
+            "license": [
+                "OFL-1.1",
+                "MIT",
+                "CC-BY-3.0"
+            ],
+            "description": "Font Awesome"
+        },
+        {
             "name": "bower-asset/jquery",
             "version": "2.1.4",
             "source": {
@@ -294,6 +331,47 @@
             }
         },
         {
+            "name": "bower-asset/textarea-autosize",
+            "version": "v0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/javierjulio/textarea-autosize.git",
+                "reference": "0a12da03e455550d3b74be5588d603fb7bdaadc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/javierjulio/textarea-autosize/zipball/0a12da03e455550d3b74be5588d603fb7bdaadc4",
+                "reference": "0a12da03e455550d3b74be5588d603fb7bdaadc4",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.8"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "dist/jquery.textarea_autosize.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Vertically adjust a textarea based on user input without needing a clone or ghost element.",
+            "keywords": [
+                "autoexpand",
+                "autogrow",
+                "expand",
+                "grow",
+                "textarea",
+                "vertical"
+            ]
+        },
+        {
             "name": "bower-asset/yii2-pjax",
             "version": "v2.0.4",
             "source": {
@@ -442,16 +520,16 @@
         },
         {
             "name": "dektrium/yii2-user",
-            "version": "v0.9.4",
+            "version": "v0.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dektrium/yii2-user.git",
-                "reference": "891fe6c3957bde7f3a7893775fd304fc84140599"
+                "reference": "84100e0e63e2052ef4ddd12f1840dfd092446e23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dektrium/yii2-user/zipball/891fe6c3957bde7f3a7893775fd304fc84140599",
-                "reference": "891fe6c3957bde7f3a7893775fd304fc84140599",
+                "url": "https://api.github.com/repos/dektrium/yii2-user/zipball/84100e0e63e2052ef4ddd12f1840dfd092446e23",
+                "reference": "84100e0e63e2052ef4ddd12f1840dfd092446e23",
                 "shasum": ""
             },
             "require": {
@@ -471,8 +549,7 @@
             "extra": {
                 "bootstrap": "dektrium\\user\\Bootstrap",
                 "branch-alias": {
-                    "dev-master": "0.9.x-dev",
-                    "dev-develop": "1.0.x-dev"
+                    "dev-master": "1.0.x-dev"
                 },
                 "asset-installer-paths": {
                     "npm-asset-library": "vendor/npm",
@@ -502,7 +579,7 @@
                 "yii2",
                 "yii2-user"
             ],
-            "time": "2015-04-06 09:21:39"
+            "time": "2015-09-27 14:49:11"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -549,71 +626,27 @@
             "time": "2013-11-30 08:25:19"
         },
         {
-            "name": "fortawesome/font-awesome",
-            "version": "v4.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/FortAwesome/Font-Awesome.git",
-                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
-                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
-                "shasum": ""
-            },
-            "require-dev": {
-                "jekyll": "1.0.2",
-                "lessc": "1.4.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "OFL-1.1",
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dave Gandy",
-                    "email": "dave@fontawesome.io",
-                    "homepage": "http://twitter.com/davegandy",
-                    "role": "Developer"
-                }
-            ],
-            "description": "The iconic font and CSS framework",
-            "homepage": "http://fontawesome.io/",
-            "keywords": [
-                "FontAwesome",
-                "awesome",
-                "bootstrap",
-                "font",
-                "icon"
-            ],
-            "time": "2015-01-22 18:09:42"
-        },
-        {
             "name": "frenzelgmbh/cm-comments",
-            "version": "0.0.1",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FrenzelGmbH/cm-comments.git",
-                "reference": "0880ba25cbd309dea2da4de7ecbcd46ba296cbe9"
+                "reference": "709aea86fa2c55a036f9039c09adbf541be4b589"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FrenzelGmbH/cm-comments/zipball/0880ba25cbd309dea2da4de7ecbcd46ba296cbe9",
-                "reference": "0880ba25cbd309dea2da4de7ecbcd46ba296cbe9",
+                "url": "https://api.github.com/repos/FrenzelGmbH/cm-comments/zipball/709aea86fa2c55a036f9039c09adbf541be4b589",
+                "reference": "709aea86fa2c55a036f9039c09adbf541be4b589",
                 "shasum": ""
             },
             "require": {
+                "philippfrenzel/yii2-textareaautosize": "*",
                 "php": ">=5.4.0",
-                "rmrevin/yii2-fontawesome": "2.7.*",
+                "rmrevin/yii2-fontawesome": "2.*",
                 "yiisoft/yii2": "2.0.*"
+            },
+            "require-dev": {
+                "codeception/codeception": "*"
             },
             "type": "yii2-extension",
             "autoload": {
@@ -639,7 +672,7 @@
                 "widget",
                 "yii"
             ],
-            "time": "2015-03-04 15:40:51"
+            "time": "2015-09-17 08:05:57"
         },
         {
             "name": "gregwar/cache",
@@ -828,25 +861,80 @@
             "time": "2013-07-10 17:25:36"
         },
         {
-            "name": "rmrevin/yii2-fontawesome",
-            "version": "2.7.1",
+            "name": "philippfrenzel/yii2-textareaautosize",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rmrevin/yii2-fontawesome.git",
-                "reference": "0b759b6b72099fac3af8a84450e604a64d36f599"
+                "url": "https://github.com/philippfrenzel/yii2-textareaautosize.git",
+                "reference": "0724ef93f97f571393ae6a5ccfaaf9fa2a4fefb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/0b759b6b72099fac3af8a84450e604a64d36f599",
-                "reference": "0b759b6b72099fac3af8a84450e604a64d36f599",
+                "url": "https://api.github.com/repos/philippfrenzel/yii2-textareaautosize/zipball/0724ef93f97f571393ae6a5ccfaaf9fa2a4fefb9",
+                "reference": "0724ef93f97f571393ae6a5ccfaaf9fa2a4fefb9",
                 "shasum": ""
             },
             "require": {
-                "fortawesome/font-awesome": "4.3.*",
+                "bower-asset/textarea-autosize": "0.4.*",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-jui": "*"
+            },
+            "require-dev": {
+                "codeception/codeception": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "net\\frenzel\\textareaautosize\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Philipp Frenzel",
+                    "email": "philipp@frenzel.net",
+                    "homepage": "http://www.frenzel.net/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Yii2 textareaautosize Widgets",
+            "homepage": "http://www.frenzel.net/",
+            "keywords": [
+                "textareaautosize",
+                "yii2"
+            ],
+            "time": "2015-03-07 08:59:56"
+        },
+        {
+            "name": "rmrevin/yii2-fontawesome",
+            "version": "2.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rmrevin/yii2-fontawesome.git",
+                "reference": "51d33ec9d1d7edab2166f1d42668c1bc8d28c068"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/51d33ec9d1d7edab2166f1d42668c1bc8d28c068",
+                "reference": "51d33ec9d1d7edab2166f1d42668c1bc8d28c068",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/fontawesome": "4.4.*",
                 "php": ">=5.4.0",
                 "yiisoft/yii2": "2.0.*"
             },
             "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "rmrevin\\yii\\fontawesome\\": ""
@@ -871,7 +959,7 @@
                 "font",
                 "yii"
             ],
-            "time": "2015-02-08 09:13:38"
+            "time": "2015-08-15 16:50:16"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1016,16 +1104,16 @@
         },
         {
             "name": "yiisoft/yii2-authclient",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-authclient.git",
-                "reference": "cbe801a7d8bb477be15cb0fbdaa75ca5bdfeb91b"
+                "reference": "22910bfe0000538f5b3ca1102cd3de0b5d14a0e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/cbe801a7d8bb477be15cb0fbdaa75ca5bdfeb91b",
-                "reference": "cbe801a7d8bb477be15cb0fbdaa75ca5bdfeb91b",
+                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/22910bfe0000538f5b3ca1102cd3de0b5d14a0e2",
+                "reference": "22910bfe0000538f5b3ca1102cd3de0b5d14a0e2",
                 "shasum": ""
             },
             "require": {
@@ -1060,25 +1148,25 @@
                 "oauth",
                 "yii2"
             ],
-            "time": "2015-05-10 22:07:56"
+            "time": "2015-09-23 17:26:02"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "1b6b1e61cf91c3cdd517d6a7e71d30bb212e4af0"
+                "reference": "1464f93834b1d5edb1f5625f7ffd6c3723fa4923"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/1b6b1e61cf91c3cdd517d6a7e71d30bb212e4af0",
-                "reference": "1b6b1e61cf91c3cdd517d6a7e71d30bb212e4af0",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/1464f93834b1d5edb1f5625f7ffd6c3723fa4923",
+                "reference": "1464f93834b1d5edb1f5625f7ffd6c3723fa4923",
                 "shasum": ""
             },
             "require": {
                 "bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*",
-                "yiisoft/yii2": ">=2.0.4"
+                "yiisoft/yii2": ">=2.0.6"
             },
             "type": "yii2-extension",
             "extra": {
@@ -1110,7 +1198,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2015-05-10 22:08:17"
+            "time": "2015-09-23 17:48:24"
         },
         {
             "name": "yiisoft/yii2-composer",

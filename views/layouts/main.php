@@ -19,7 +19,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <base href="http://yii2-shop.by:8080/">
+
     <?php $this->head() ?>
 </head>
 <body>

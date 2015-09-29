@@ -45,7 +45,7 @@ class CategoryController extends Controller
     public function actionCreate()
     {
         $model = new Category();
-        $models = Category::getListCategory();
+        //$models = Category::getListCategory();
         if($model->isNewRecord){
             $model->active = 1;
         }
@@ -55,7 +55,7 @@ class CategoryController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'models' => $models,
+                //'models' => $models,
             ]);
         }
     }
@@ -69,7 +69,7 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $models = Category::getListCategory();
+        //$models = Category::getListCategory();
         $model->updated = Yii::$app->formatter->format($model->updated, 'date');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //если картинка есть, то больше не добавляем
@@ -79,12 +79,12 @@ class CategoryController extends Controller
             $model->updated = Yii::$app->formatter->format($model->updated, 'date');
             return $this->render('update', [
                 'model' => $model,
-                'models' => $models,
+                //'models' => $models,
             ]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'models' => $models,
+                //'models' => $models,
             ]);
         }
     }

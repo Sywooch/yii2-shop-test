@@ -9,7 +9,6 @@ use yii\jui\DatePicker;
 /* @var $model app\modules\admin\models\Category */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-<?//var_dump($models)?>
 <div class="category-form">
 
     <?php $form = ActiveForm::begin([
@@ -19,23 +18,30 @@ use yii\jui\DatePicker;
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'alias')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'active')->checkbox(['id' => 'check']) ?>
-    <?= $form->field($model, 'parent_category_id')->dropDownList(ArrayHelper::merge(['0' => '- Не выбрано'], ArrayHelper::map($models, 'id', 'name')));?>
+    <?= $form->field($model, 'parent_category_id')
+        ->dropDownList(
+            //при обновлении исключаем самого себя из списка выбора
+            ArrayHelper::map(\app\modules\admin\models\Category::getListCategory(($model->isNewRecord)?[]:'id!='.$model->id), 'id', 'name'),
+            ['prompt'=>'Не выбрано']
+        );?>
+
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
 
-    <?//= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'image')->fileInput() ?>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <?$images = $model->getImages()?>
             <div class="row">
-                <?  foreach ($images as $image):?>
-                <div class="col-md-3">
-                    
-                    <img src="<?=$image->getPath('200x200')?>">
-                </div>
-                <?endforeach?>
+                <?php
+                //TODO пофиксить метод отображения картинок
+                /*
+                foreach ($model->getImages() as $image){
+
+                    echo Html::tag('div', Html::img($image->getPath('200x200')),['class'=>'col-md-3']);
+
+                }*/
+                ?>
             </div>
             
         </div>

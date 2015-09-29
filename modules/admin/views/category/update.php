@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->name];
 
     <?= $this->render('_form', [
         'model' => $model,
-        'models' => $models,
+        //'models' => $models,
     ]) ?>
 
 </div>

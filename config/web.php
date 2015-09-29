@@ -6,7 +6,7 @@ $config = [
     'name' => 'Yii2 магазин',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log','debug'],
     'components' => [
         /*'urlManager' => [
             'class' => 'yii\web\UrlManager',
@@ -22,6 +22,35 @@ $config = [
                 '<action:\w+>' => 'site/<action>',
             ],
         ],*/
+
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => true,
+            //'suffix' => '.html',
+            'rules' => [
+                [
+                    'pattern' => '<controller>/<action>/<id:\d+>',
+                    'route' => '<controller>/<action>',
+                    'suffix' => ''
+                ],
+                [
+                    'pattern' => '<controller>/<action>',
+                    'route' => '<controller>/<action>',
+                    'suffix' => ''
+                ],
+                [
+                    'pattern' => '<module>/<controller>/<action>/<id:\d+>',
+                    'route' => '<module>/<controller>/<action>',
+                    'suffix' => ''
+                ],
+                [
+                    'pattern' => '<module>/<controller>/<action>',
+                    'route' => '<module>/<controller>/<action>',
+                    'suffix' => ''
+                ],
+            ],
+        ],
         'i18n' => [
             'translations' => [
                 'comment*' => [
@@ -97,6 +126,11 @@ $config = [
         'comment' => [
             'class' => 'net\frenzel\comment\Module'
         ],
+
+        'debug' => [
+            'class' => 'yii\debug\Module',
+            //'allowedIPs' => ['1.2.3.4', '127.0.0.1', '::1']
+        ]
     ],
 ];
 

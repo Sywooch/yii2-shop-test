@@ -110,9 +110,11 @@ class Category extends ActiveRecord {
      */
     public function getParent()
     {
-        return $this->hasOne(self::className(),['parent_category_id'=>'id'])
+        return $this->hasOne(self::className(),['id'=>'parent_category_id'])
             ->from(self::tableName() . ' parent');
     }
+
+    
 
     /**
      * List for DropDownList

@@ -50,8 +50,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'parent_category_id',
                 'format' => 'raw',
                 'value' => function($data) {
-                    //return Html::tag('a', $category->name, ['href' => Url::to(['update','id' => $category->id])]);
-                    return Html::a(($data->parent_category_id!==0)?$data->parent->name:NULL, Url::to(['admin/category/update','id'=>$data->id]));
+                    if($data->parent)
+                    {
+                        return Html::a($data->parent->name, Url::to(['admin/category/update','id'=>$data->id]));
+                    }
                 },
                 'filter'=>Html::activeDropDownList($searchModel,'parent_category_id',\yii\helpers\ArrayHelper::map(\app\modules\admin\models\Category::getListCategory(), 'id', 'name'),
                     ['prompt'=>'Не выбрано']),

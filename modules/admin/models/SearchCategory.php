@@ -55,12 +55,15 @@ class SearchCategory extends Category
             return $dataProvider;
         }
 
+        $query->joinWith('parent');
+
+
         $query->andFilterWhere([
-            'id' => $this->id,
-            'parent_category_id' => $this->parent_category_id,
-            'created' => $this->created,
-            'updated' => $this->updated,
-            'active' => $this->active,
+            'category.id' => $this->id,
+            'category.parent_category_id' => $this->parent_category_id,
+            'category.created' => $this->created,
+            'category.updated' => $this->updated,
+            'category.active' => $this->active,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

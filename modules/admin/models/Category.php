@@ -26,6 +26,21 @@ use yii\db\ActiveRecord;
  */
 class Category extends ActiveRecord {
 
+    const YES = 1;
+    const NO = 0;
+
+
+    /*
+     * return array Yes or No
+     */
+    static function getYesNo()
+    {
+        return [
+            self::YES=>'Да',
+            self::NO=>'Нет',
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -88,6 +103,15 @@ class Category extends ActiveRecord {
             'active' => 'Активность',
             'alias' => 'Псевдоним',
         ];
+    }
+
+    /*
+     * get parent category
+     */
+    public function getParent()
+    {
+        return $this->hasOne(self::className(),['parent_category_id'=>'id'])
+            ->from(self::tableName() . ' parent');
     }
 
     /**

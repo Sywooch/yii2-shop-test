@@ -26,12 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
-            [
-                'class' => yii\grid\CheckboxColumn::classname(),
-                'headerOptions' => [
-                     'class'=>'col-md-1'
-                ],
-            ],
+//            [
+//                'class' => yii\grid\CheckboxColumn::classname(),
+//                'headerOptions' => [
+//                     'class'=>'col-md-1'
+//                ],
+//            ],
             [
                 'attribute' => 'id',
                 'headerOptions' => [
@@ -45,14 +45,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::tag('a', $category->name, ['href' => Url::to(['update','id' => $category->id])]);
                 }
             ],
-            'parent_category_id',
+            //'parent_category_id',
             [
                 'attribute' => 'parent_category_id',
                 'format' => 'raw',
-                'value' => function($category) {
+                'value' => function($data) {
                     //return Html::tag('a', $category->name, ['href' => Url::to(['update','id' => $category->id])]);
-                
-                }
+                    return Html::a(($data->parent_category_id!==0)?$data->parent->name:NULL, Url::to(['admin/category/update','id'=>$data->id]));
+                },
+                'filter'=>Html::activeDropDownList($searchModel,'parent_category_id',\yii\helpers\ArrayHelper::map(\app\modules\admin\models\Category::getListCategory(), 'id', 'name'),
+                    ['prompt'=>'Не выбрано']),
             ],
             [
                 'attribute'=>'active',
@@ -67,6 +69,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     return Html::tag('span', $mes, ['class' => 'label label-'.$class]);
                 },
+                'filter'=>Html::activeDropDownList($searchModel,'active',\app\modules\admin\models\Category::getYesNo(),
+                    ['prompt'=>'Не выбрано']),
                 'headerOptions' => [
                      'class'=>'col-sm-1'
                 ],
@@ -80,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{update}{delete}',
+                'template' => '{delete}',
                 'headerOptions' => [
                      'class'=>'col-sm-1'
                 ],

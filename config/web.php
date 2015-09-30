@@ -2,7 +2,10 @@
 
 $params = require(__DIR__ . '/params.php');
 $config = [
+    'timeZone'=>'Europe/Moscow',
     'language' => 'ru-RU',
+    'sourceLanguage' => 'ru',
+    //'defaultRoute' => 'user/security/login',
     'name' => 'Yii2 магазин',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
@@ -29,6 +32,7 @@ $config = [
             'enableStrictParsing' => true,
             //'suffix' => '.html',
             'rules' => [
+                ''=>'site/index',
                 [
                     'pattern' => '<controller>/<action>/<id:\d+>',
                     'route' => '<controller>/<action>',
